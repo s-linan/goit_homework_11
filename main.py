@@ -1,6 +1,9 @@
 from collections import UserDict
 from datetime import datetime, date
 
+"""Class Field is parent class for value classes, here is some methods to override data format
+and to compare some data of values."""
+
 
 class Field:
 
@@ -24,6 +27,10 @@ class Field:
             return self.value == input.value
 
 
+"""Class Name take name value and check the data format,
+if format wrong raise error."""
+
+
 class Name(Field):
     def __init__(self, value):
         super().__init__(value)
@@ -37,6 +44,10 @@ class Name(Field):
     def value(self, value: str) -> None:
         self.valid_name(value)
         self._value = value
+
+
+"""Class Phone take phone value and check the data format,
+if format wrong raise error."""
 
 
 class Phone(Field):
@@ -56,6 +67,12 @@ class Phone(Field):
         self._value = value
 
 
+"""
+Class Birthday take birthday value and check the data format,
+if format wrong raise error.
+"""
+
+
 class Birthday(Field):
     def __init__(self, value):
         super().__init__(value)
@@ -70,6 +87,11 @@ class Birthday(Field):
     @Field.value.setter
     def value(self, new_value):
         self._value = self.valid_birthday(new_value)
+
+
+"""Class Record are like main class, he take values and spread it all to their places also edit or delete phone numbers.
+Also here are the days_to_birthday method which can return the number of days until the birthday.
+Also here are the __str__ method which make f-strings to output data"""
 
 
 class Record:
@@ -110,6 +132,10 @@ class Record:
         return f"name: {str(self.name)}, phones: {phones}, birthday: {b_day};\n"
 
 
+"""Class AddressBook record all values in self data, can find records and output pages with data for the entered
+number of records for pages or for 1 per page if number was not entered or input wrong"""
+
+
 class AddressBook(UserDict):
     N = None
 
@@ -127,6 +153,7 @@ class AddressBook(UserDict):
             AddressBook.N = 1
         return self.__next__()
 
+    # iterate in AddressBook and make strings with data
     def __iter__(self):
         result = ""
         counter = 0
@@ -144,6 +171,7 @@ class AddressBook(UserDict):
                 result = ""
                 counter = 0
 
+    # generate pages and output it until all data will be outputted
     def __next__(self):
         generator = self.__iter__()
         page = 1
